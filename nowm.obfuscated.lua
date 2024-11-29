@@ -101,7 +101,6 @@ rhy = {
             punchx = c,
             punchy = d
         })
-        runCoroutine(function()
         sendPacketRaw(false, {
             type = 0,
             padding1 = 0,
@@ -120,7 +119,6 @@ rhy = {
             punchx = c,
             punchy = d
         })
-        end)
     end,
     checkPath = function(x, y)
         _path0x001 = math.floor(getLocal().pos.x / 32)
@@ -168,7 +166,6 @@ rhy = {
             rhy.move(nextX, nextY)
             rhy.randomSleep(path_delay, path_delay + 100)
         end
-        sleep(10)
         sendPacketRaw(false, {
             type = 0,
             state = state,
