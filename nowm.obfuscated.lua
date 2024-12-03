@@ -56,6 +56,17 @@ function cekDiscordID(tabel)
     end
     return false
 end
+function await(condition, timeout)
+    startTime = os.clock()
+    while true do
+        if condition then
+            return true
+        elseif timeout ~= 0 and os.clock() - startTime >= timeout then
+            return false
+        end
+        rhy.randomSleep(50, 100)
+    end
+end
 rhy = {
     inv = function(itemid)
         for _, item in pairs(getInventory()) do
@@ -68,7 +79,7 @@ rhy = {
     randomSleep = function(a, b)
         sleep(math.random(a, b))
     end,
-    spr = function(a, b, c, d)
+    spr = function spr(a, b, c, d)
         localX = math.floor(getLocal().pos.x / 32)
         if b == 18 then
             if c > localX then
@@ -166,11 +177,6 @@ rhy = {
             rhy.move(nextX, nextY)
             rhy.randomSleep(path_delay, path_delay + 100)
         end
-        sendPacketRaw(false, {
-            type = 0,
-            state = state,
-            value = 0
-        })
     end,
     sendCollect = function(a, ItemID)
         localPosX, localPosY = math.floor(getLocal().pos.x / 32), math.floor(getLocal().pos.y / 32)
@@ -366,7 +372,7 @@ rhy = {
             type = 0,
             state = state,
             value = 0,
-            x = a * 32 + (7 * direction),
+            x = a * 32 + (6 * direction),
             y = b * 32 + 2,
             speedx = 0,
             speedy = 0,
@@ -377,12 +383,21 @@ rhy = {
             type = 0,
             state = state,
             value = 0,
-            x = a * 32 + (7 * direction),
+            x = a * 32 + (6 * direction),
             y = b * 32 + 2,
             speedx = 0,
             speedy = 0,
             punchx = -1,
             punchy = -1
         })
+        sleep(200)
+        sendPacketRaw(false, {
+            type = 0,
+            state = state,
+            value = 0,
+            x = a * 32 + (6 * direction),
+            y = b * 32 + 2
+        })
+        await(function() return (math.floor(getLocal().pos.x/32) == a and math.floor(getLocal().pos.y/32) == b), 0)
     end
-}
+    }
