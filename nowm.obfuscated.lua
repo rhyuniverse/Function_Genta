@@ -79,7 +79,7 @@ rhy = {
     randomSleep = function(a, b)
         sleep(math.random(a, b))
     end,
-    spr = function spr(a, b, c, d)
+    spr = function(a, b, c, d)
         localX = math.floor(getLocal().pos.x / 32)
         if b == 18 then
             if c > localX then
@@ -390,7 +390,6 @@ rhy = {
             punchx = -1,
             punchy = -1
         })
-        sleep(200)
         sendPacketRaw(false, {
             type = 0,
             state = state,
